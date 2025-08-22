@@ -92,8 +92,7 @@ export function ThemedApp({ children }: { children: React.ReactNode }) {
 // Custom Sun Icon Component
 function CustomSunIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="10" fill="#1a1a1a" />
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
       <circle cx="12" cy="12" r="4" fill="#FFD700" />
       <g stroke="#FFD700" strokeWidth="1.5" strokeLinecap="round">
         <path d="M12 2v2" />
@@ -112,9 +111,11 @@ function CustomSunIcon() {
 // Custom Moon Icon Component
 function CustomMoonIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="10" fill="#000000" />
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="#ffffff" />
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+        fill="#ffffff"
+      />
     </svg>
   )
 }
@@ -125,25 +126,26 @@ export function ThemeToggle() {
   
   return (
     <Box
-      backgroundColor="colorBackgroundBody"
+      width="40px"
+      height="40px"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
       borderRadius="borderRadiusCircle"
-      padding="space20"
+      backgroundColor={isDark ? "colorBackgroundBodyInverse" : "colorBackgroundBody"}
       boxShadow="shadowHigh"
+      cursor="pointer"
+      onClick={toggleTheme}
+      role="button"
+      aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          toggleTheme()
+        }
+      }}
     >
-      <div
-        onClick={toggleTheme}
-        style={{ cursor: 'pointer', display: 'inline-block' }}
-        aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            toggleTheme()
-          }
-        }}
-      >
-        {isDark ? <CustomSunIcon /> : <CustomMoonIcon />}
-      </div>
+      {isDark ? <CustomSunIcon /> : <CustomMoonIcon />}
     </Box>
   )
 }
