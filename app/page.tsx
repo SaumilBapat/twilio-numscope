@@ -21,6 +21,8 @@ import { ChatIcon } from "@twilio-paste/icons/esm/ChatIcon"
 import { LoadingIcon } from "@twilio-paste/icons/esm/LoadingIcon"
 import { FilterIcon } from "@twilio-paste/icons/esm/FilterIcon"
 import { LogoTwilioIcon } from "@twilio-paste/icons/esm/LogoTwilioIcon"
+import { ChevronLeftIcon } from "@twilio-paste/icons/esm/ChevronLeftIcon"
+import { ChevronRightIcon } from "@twilio-paste/icons/esm/ChevronRightIcon"
 import { 
   AIChatLog, 
   AIChatMessage, 
@@ -74,9 +76,16 @@ export default function TwilioChatbot() {
   const messagesEndRef = useRef<HTMLDivElement | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [typingStep, setTypingStep] = useState(0)
-  const [showFilters, setShowFilters] = useState(true)
+  const [filtersPanelOpen, setFiltersPanelOpen] = useState(true)
   const [validationError, setValidationError] = useState<string | null>(null)
 
+  // Initialize panel state based on screen size
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isMobile = window.innerWidth < 768
+      setFiltersPanelOpen(!isMobile)
+    }
+  }, [])
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -234,102 +243,38 @@ export default function TwilioChatbot() {
         minHeight={["60px", "70px", "80px"]}
         display="flex"
         alignItems="center"
-        justifyContent="space-between"
+        justifyContent="center"
+        position="relative"
         style={{
           background: "linear-gradient(135deg, #F22F46 0%, #E02040 100%)"
         }}
       >
-        {/* Left: Filters Button */}
-        <Box flex="0 0 auto">
-          <Box
-            backgroundColor="colorBackgroundPrimary"
-            borderRadius="borderRadius30"
-            padding="space30"
-            boxShadow="shadowHigh"
-            borderWidth="borderWidth10"
-            borderColor="colorBorderPrimary"
-            borderStyle="solid"
-            style={{
-              backgroundColor: "#0066CC",
-              borderColor: "#0066CC",
-              transform: "scale(0.9)"
-            }}
-          >
-            <Button 
-              variant="primary"
-              onClick={() => setShowFilters(!showFilters)}
-              size={["small", "default", "default"]}
-              style={{
-                backgroundColor: showFilters ? "#0066CC" : "#4A90E2",
-                borderColor: showFilters ? "#0066CC" : "#4A90E2",
-                borderRadius: "8px",
-                padding: "16px 28px",
-                boxShadow: "0 2px 8px rgba(74, 144, 226, 0.25)",
-                transition: "all 0.2s ease-in-out",
-                fontWeight: "700",
-                color: "white",
-                minHeight: "48px"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#0052A3"
-                e.currentTarget.style.transform = "translateY(-1px) scale(1.02)"
-                e.currentTarget.style.boxShadow = "0 4px 12px rgba(74, 144, 226, 0.35)"
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = showFilters ? "#0066CC" : "#4A90E2"
-                e.currentTarget.style.transform = "translateY(0px) scale(1)"
-                e.currentTarget.style.boxShadow = "0 2px 8px rgba(74, 144, 226, 0.25)"
-              }}
-              onMouseDown={(e) => {
-                e.currentTarget.style.transform = "translateY(0px) scale(0.98)"
-              }}
-              onMouseUp={(e) => {
-                e.currentTarget.style.transform = "translateY(-1px) scale(1.02)"
-              }}
-            >
-              <Stack orientation="horizontal" spacing="space30">
-                <FilterIcon decorative size="sizeIcon30" />
-                <Text 
-                  as="span" 
-                  fontWeight="fontWeightSemibold"
-                  display={["none", "block", "block"]}
-                  color="colorTextInverse"
-                  fontSize="16px"
-                >
-                  Filters
-                </Text>
-              </Stack>
-            </Button>
-          </Box>
-        </Box>
-
         {/* Center: Title */}
-        <Box 
-          flex="1"
-          textAlign="center"
-          marginX="space40"
-        >
-          <Stack orientation="vertical" spacing="space10">
-            <Heading 
-              as="h1" 
-              variant={["heading30", "heading40", "heading40"]}
-              style={{ color: "#ffffff !important" }}
-            >
-              Twilio Phone Number Assistant
-            </Heading>
-            <Text 
-              as="p"
-              fontSize={["fontSize10", "fontSize20", "fontSize20"]}
-              display={["none", "block", "block"]}
-              style={{ color: "#ffffff" }}
-            >
-              Find the perfect number for your use case
-            </Text>
-          </Stack>
-        </Box>
+        <Stack orientation="vertical" spacing="space10">
+          <Heading 
+            as="h1" 
+            variant={["heading30", "heading40", "heading40"]}
+            style={{ color: "#ffffff" }}
+          >
+            Twilio Phone Number Assistant
+          </Heading>
+          <Text 
+            as="p"
+            fontSize={["fontSize10", "fontSize20", "fontSize20"]}
+            display={["none", "block", "block"]}
+            style={{ color: "#ffffff" }}
+          >
+            Find the perfect number for your use case
+          </Text>
+        </Stack>
 
-        {/* Right: Theme Toggle */}
-        <Box flex="0 0 auto">
+        {/* Theme Toggle - Absolute positioned */}
+        <Box
+          position="absolute"
+          right="space60"
+          top="50%"
+          style={{ transform: "translateY(-50%)" }}
+        >
           <ThemeToggle />
         </Box>
       </Box>
@@ -357,8 +302,8 @@ export default function TwilioChatbot() {
         minHeight="calc(100vh - 80px)"
         position="relative"
       >
-        {/* Left Sidebar for Filters */}
-        {showFilters && (
+        {/* Collapsible Filter Panel */}
+        {filtersPanelOpen && (
           <Box
             width={["100%", "100%", "300px"]}
             backgroundColor="colorBackgroundBody"
@@ -371,8 +316,9 @@ export default function TwilioChatbot() {
             boxShadow="shadow"
             flexShrink={0}
             paddingTop="space20"
-            maxHeight={["none", "none", "none"]}
-            overflow={["visible", "visible", "visible"]}
+            style={{
+              transition: "all 0.3s ease-in-out"
+            }}
           >
             <Box 
               padding="space40"
@@ -548,6 +494,44 @@ export default function TwilioChatbot() {
             </Box>
           </Box>
         )}
+
+        {/* Chevron Toggle Button */}
+        <Box
+          position="absolute"
+          left={filtersPanelOpen ? ["0", "0", "300px"] : "0"}
+          top={["10px", "15px", "20px"]}
+          zIndex="zIndex30"
+          display={["block", "block", "block"]}
+          style={{
+            transition: "left 0.3s ease-in-out"
+          }}
+        >
+          <Button
+            onClick={() => setFiltersPanelOpen(!filtersPanelOpen)}
+            variant="secondary"
+            size="icon"
+            aria-expanded={filtersPanelOpen}
+            aria-label={filtersPanelOpen ? "Collapse filters" : "Expand filters"}
+            style={{
+              backgroundColor: "rgba(255, 255, 255, 0.95)",
+              borderRadius: filtersPanelOpen ? "0 8px 8px 0" : "8px",
+              boxShadow: "2px 0 8px rgba(0, 0, 0, 0.1)",
+              border: "1px solid rgba(0, 0, 0, 0.1)",
+              borderLeft: filtersPanelOpen ? "none" : "1px solid rgba(0, 0, 0, 0.1)",
+              minWidth: "36px",
+              height: "48px",
+              padding: "0 8px",
+              transition: "all 0.2s ease-in-out",
+              color: "#F22F46"
+            }}
+          >
+            {filtersPanelOpen ? (
+              <ChevronLeftIcon decorative={false} title="Collapse filters" size="sizeIcon20" />
+            ) : (
+              <ChevronRightIcon decorative={false} title="Expand filters" size="sizeIcon20" />
+            )}
+          </Button>
+        </Box>
 
         {/* Chat Interface Section */}
         <Box 

@@ -85,8 +85,8 @@ export function ThemedApp({ children }: { children: React.ReactNode }) {
 function CustomSunIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="4" fill="#FFD700" />
-      <g stroke="#FFD700" strokeWidth="1.5" strokeLinecap="round">
+      <circle cx="12" cy="12" r="4" fill="#F59E0B" />
+      <g stroke="#F59E0B" strokeWidth="2" strokeLinecap="round">
         <path d="M12 2v2" />
         <path d="M12 20v2" />
         <path d="M4.93 4.93l1.41 1.41" />
@@ -106,7 +106,9 @@ function CustomMoonIcon() {
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
       <path
         d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
-        fill="#ffffff"
+        fill="#94A3B8"
+        stroke="#64748B"
+        strokeWidth="0.5"
       />
     </svg>
   )
@@ -116,34 +118,29 @@ function CustomMoonIcon() {
 export function ThemeToggle() {
   const { isDark, toggleTheme } = useTheme()
 
-  // Use the *target* theme inside a tiny nested provider so tokens match the icon
-  const targetTheme = isDark ? "default" : "dark"
-
   return (
-    <Theme.Provider theme={targetTheme}>
-      <Box
-        width="40px"
-        height="40px"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        borderRadius="borderRadiusCircle"
-        backgroundColor="colorBackgroundBody"
-        boxShadow="shadowHigh"
-        cursor="pointer"
-        onClick={toggleTheme}
-        role="button"
-        aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault()
-            toggleTheme()
-          }
-        }}
-      >
-        {isDark ? <CustomSunIcon /> : <CustomMoonIcon />}
-      </Box>
-    </Theme.Provider>
+    <Box
+      width="40px"
+      height="40px"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      borderRadius="borderRadiusCircle"
+      backgroundColor={isDark ? "#000000" : "#ffffff"}
+      boxShadow="shadowHigh"
+      cursor="pointer"
+      onClick={toggleTheme}
+      role="button"
+      aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault()
+          toggleTheme()
+        }
+      }}
+    >
+      {isDark ? <CustomMoonIcon /> : <CustomSunIcon />}
+    </Box>
   )
 }
