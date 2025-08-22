@@ -362,8 +362,8 @@ export default function TwilioChatbot() {
             boxShadow="shadow"
             flexShrink={0}
             paddingTop="space20"
-            maxHeight={["40vh", "40vh", "none"]}
-            overflow={["auto", "auto", "visible"]}
+            maxHeight={["none", "none", "none"]}
+            overflow={["visible", "visible", "visible"]}
           >
             <Box 
               padding="space40"
@@ -478,8 +478,8 @@ export default function TwilioChatbot() {
                     borderColor="colorBorderWeaker"
                     borderStyle="solid"
                     padding="space30"
-                    maxHeight="200px"
-                    overflow="auto"
+                    maxHeight={["none", "none", "200px"]}
+                    overflow={["visible", "visible", "auto"]}
                     backgroundColor="colorBackgroundBody"
                   >
                     <Stack orientation="vertical" spacing="space20">
@@ -560,8 +560,8 @@ export default function TwilioChatbot() {
               <Box 
                 padding={["space20", "space30", "space40"]}
                 backgroundColor="colorBackgroundBody"
-                maxHeight={["300px", "400px", "500px"]}
-                overflow="auto"
+                maxHeight={["none", "none", "500px"]}
+                overflow={["visible", "visible", "auto"]}
               >
                 <AIChatLog>
                   {messages.map((message) => (
@@ -708,7 +708,7 @@ export default function TwilioChatbot() {
           paddingY="space0"
           paddingTop="space20"
           display={["block", "block", "block"]}
-          minHeight={["300px", "400px", "auto"]}
+          minHeight={["auto", "auto", "auto"]}
         >
           <Box 
             backgroundColor="colorBackgroundWeak"
@@ -716,7 +716,7 @@ export default function TwilioChatbot() {
             borderWidth="borderWidth10"
             borderColor="colorBorderWeaker"
             borderStyle="solid"
-            height={["300px", "400px", "auto"]}
+            height={["auto", "auto", "auto"]}
           >
               <PhoneNumbersTable 
                 requirements={{
