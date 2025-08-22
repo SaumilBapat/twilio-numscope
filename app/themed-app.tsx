@@ -89,6 +89,36 @@ export function ThemedApp({ children }: { children: React.ReactNode }) {
   )
 }
 
+// Custom Sun Icon Component
+function CustomSunIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" fill="#1a1a1a" />
+      <circle cx="12" cy="12" r="4" fill="#FFD700" />
+      <g stroke="#FFD700" strokeWidth="1.5" strokeLinecap="round">
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="M4.93 4.93l1.41 1.41" />
+        <path d="M17.66 17.66l1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="M6.34 17.66l-1.41 1.41" />
+        <path d="M19.07 4.93l-1.41 1.41" />
+      </g>
+    </svg>
+  )
+}
+
+// Custom Moon Icon Component
+function CustomMoonIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" fill="#000000" />
+      <path d="M9 2a10 10 0 1 0 10 10c0-5.5-4.5-10-10-10z" fill="#ffffff" transform="translate(1.5, 1)" />
+    </svg>
+  )
+}
+
 // Theme Toggle Component
 export function ThemeToggle() {
   const { isDark, toggleTheme } = useTheme()
@@ -106,7 +136,7 @@ export function ThemeToggle() {
         onClick={toggleTheme}
         aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
       >
-        {isDark ? <LightModeIcon decorative size="sizeIcon30" /> : <DarkModeIcon decorative size="sizeIcon30" />}
+        {isDark ? <CustomSunIcon /> : <CustomMoonIcon />}
       </Button>
     </Box>
   )
