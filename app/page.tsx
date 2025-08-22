@@ -478,7 +478,7 @@ export default function TwilioChatbot() {
           minHeight="0"
         >
             {/* Chat Interface */}
-            <Card padding="space0" display="flex" flexDirection="column" minHeight="0">
+            <Card padding="space0" display="flex" flexDirection="column" minHeight="0" overflow="visible">
               <Box 
                 padding="space40" 
                 borderBottomWidth="borderWidth10" 
@@ -508,6 +508,7 @@ export default function TwilioChatbot() {
               </Box>
 
               <Box 
+                className="chat-scroll"
                 flex="1"
                 minHeight="0"
                 padding="space40"
@@ -517,8 +518,7 @@ export default function TwilioChatbot() {
                 style={{ 
                   scrollBehavior: 'smooth',
                   WebkitOverflowScrolling: 'touch',
-                  scrollbarWidth: 'thin',
-                  scrollbarColor: '#cbd5e0 #f7fafc'
+                  scrollbarGutter: 'stable both-edges'
                 }}
               >
                 <AIChatLog>
