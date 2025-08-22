@@ -116,8 +116,7 @@ export default function TwilioChatbot() {
 
     // Require at least one country to be selected
     if (selectedCountries.length === 0) {
-      setValidationError("Please select at least one country before submitting your request.")
-      addMessage("Please select at least one country to get accurate phone number recommendations.", "bot")
+      setValidationError("Please select at least one country to get accurate recommendations")
       return
     }
 
