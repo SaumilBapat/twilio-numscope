@@ -237,35 +237,49 @@ export default function TwilioChatbot() {
           top="50%"
           style={{ transform: "translateY(-50%)" }}
         >
-          <Box
-            backgroundColor="rgb(0, 0, 0)"
-            borderRadius="borderRadius20"
-            padding="space30"
-            boxShadow="shadowCard"
+          <Button 
+            variant="primary"
+            onClick={() => setShowFilters(!showFilters)}
+            size={["small", "default", "default"]}
+            style={{
+              backgroundColor: showFilters ? "#0066CC" : "#4A90E2",
+              borderColor: showFilters ? "#0066CC" : "#4A90E2",
+              borderRadius: "8px",
+              padding: "12px 16px",
+              boxShadow: "0 2px 8px rgba(74, 144, 226, 0.25)",
+              transition: "all 0.2s ease-in-out",
+              fontWeight: "600",
+              color: "white"
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = "#0052A3"
+              e.currentTarget.style.transform = "translateY(-1px)"
+              e.currentTarget.style.boxShadow = "0 4px 12px rgba(74, 144, 226, 0.35)"
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = showFilters ? "#0066CC" : "#4A90E2"
+              e.currentTarget.style.transform = "translateY(0px)"
+              e.currentTarget.style.boxShadow = "0 2px 8px rgba(74, 144, 226, 0.25)"
+            }}
+            onMouseDown={(e) => {
+              e.currentTarget.style.transform = "translateY(0px) scale(0.98)"
+            }}
+            onMouseUp={(e) => {
+              e.currentTarget.style.transform = "translateY(-1px) scale(1)"
+            }}
           >
-            <Button 
-              variant={showFilters ? "primary" : "secondary"}
-              onClick={() => setShowFilters(!showFilters)}
-              size={["small", "default", "default"]}
-              style={{
-                backgroundColor: showFilters ? "#F22F46" : "transparent",
-                borderColor: showFilters ? "#F22F46" : "rgba(255, 255, 255, 0.3)",
-                color: "white"
-              }}
-            >
-              <Stack orientation="horizontal" spacing="space20">
-                <FilterIcon decorative size="sizeIcon20" />
-                <Text 
-                  as="span" 
-                  fontWeight="fontWeightMedium"
-                  display={["none", "block", "block"]}
-                  color="colorTextInverse"
-                >
-                  Filters
-                </Text>
-              </Stack>
-            </Button>
-          </Box>
+            <Stack orientation="horizontal" spacing="space20">
+              <FilterIcon decorative size="sizeIcon20" />
+              <Text 
+                as="span" 
+                fontWeight="fontWeightSemibold"
+                display={["none", "block", "block"]}
+                color="colorTextInverse"
+              >
+                Filters
+              </Text>
+            </Stack>
+          </Button>
         </Box>
 
         {/* Theme Toggle in Header */}
