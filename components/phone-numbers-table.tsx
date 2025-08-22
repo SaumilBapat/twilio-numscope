@@ -161,16 +161,15 @@ export function PhoneNumbersTable({ requirements, recommendedNumbers = [], compa
                     </Stack>
                   </Box>
                 ))}
+                {filteredNumbers.length === 0 && (
+                  <Box paddingY="space50" textAlign="center">
+                    <Text as="span" color="colorTextWeak" fontSize="fontSize20">
+                      No recommendations match your filter
+                    </Text>
+                  </Box>
+                )}
               </Stack>
             </Box>
-              {filteredNumbers.length === 0 && (
-                <Box paddingY="space50" textAlign="center">
-                  <Text as="span" color="colorTextWeak" fontSize="fontSize20">
-                    No recommendations match your filter
-                  </Text>
-                </Box>
-              )}
-            </Stack>
           ) : (
             // Full table layout
             <Table>
