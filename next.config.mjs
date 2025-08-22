@@ -9,15 +9,13 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  devIndicators: {
-    buildActivity: false,
-  },
+  devIndicators: false,
   // Improve dev server stability
   webpack: (config, { dev, isServer }) => {
     if (dev) {
       // Disable webpack cache in development to prevent stale module issues
       config.cache = false;
-      
+
       // Better error handling for missing modules
       config.resolve.fallback = {
         ...config.resolve.fallback,
