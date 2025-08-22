@@ -641,23 +641,32 @@ export default function TwilioChatbot() {
                             padding: "12px 16px",
                             boxShadow: "0 2px 8px rgba(242, 47, 70, 0.25)",
                             transition: "all 0.2s ease-in-out",
-                            fontWeight: "600"
+                            fontWeight: "600",
+                            color: "white"
                           }}
                           onMouseEnter={(e) => {
-                            e.currentTarget.style.backgroundColor = "#E02040"
-                            e.currentTarget.style.transform = "translateY(-1px)"
-                            e.currentTarget.style.boxShadow = "0 4px 12px rgba(242, 47, 70, 0.35)"
+                            if (!isLoading) {
+                              e.currentTarget.style.backgroundColor = "#E02040"
+                              e.currentTarget.style.transform = "translateY(-1px)"
+                              e.currentTarget.style.boxShadow = "0 4px 12px rgba(242, 47, 70, 0.35)"
+                            }
                           }}
                           onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = "#F22F46"
-                            e.currentTarget.style.transform = "translateY(0px)"
-                            e.currentTarget.style.boxShadow = "0 2px 8px rgba(242, 47, 70, 0.25)"
+                            if (!isLoading) {
+                              e.currentTarget.style.backgroundColor = "#F22F46"
+                              e.currentTarget.style.transform = "translateY(0px)"
+                              e.currentTarget.style.boxShadow = "0 2px 8px rgba(242, 47, 70, 0.25)"
+                            }
                           }}
                           onMouseDown={(e) => {
-                            e.currentTarget.style.transform = "translateY(0px) scale(0.98)"
+                            if (!isLoading) {
+                              e.currentTarget.style.transform = "translateY(0px) scale(0.98)"
+                            }
                           }}
                           onMouseUp={(e) => {
-                            e.currentTarget.style.transform = "translateY(-1px) scale(1)"
+                            if (!isLoading) {
+                              e.currentTarget.style.transform = "translateY(-1px) scale(1)"
+                            }
                           }}
                         >
                           <Stack orientation="horizontal" spacing="space20">
