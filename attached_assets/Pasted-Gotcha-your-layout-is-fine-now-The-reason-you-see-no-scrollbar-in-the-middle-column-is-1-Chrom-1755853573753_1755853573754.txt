@@ -1,0 +1,104 @@
+Gotcha—your layout is fine now. The reason you “see no scrollbar” in the middle column is:
+
+1. Chrome on macOS shows **overlay scrollbars** that are hidden until you scroll (System Settings → Appearance → “Show scroll bars: **Automatically based on mouse or trackpad**”). If you aren’t actively scrolling, it looks like there is no bar.
+
+2. Your custom scrollbar rules aren’t being applied (Paste `<Box>` doesn’t read a `css` prop). So you’re still getting the default overlay behavior.
+
+Below is a drop-in fix that (a) makes the center area scroll reliably, (b) guarantees a visible gutter so the thumb isn’t hugging the rounded Card edge, and (c) actually applies custom scrollbar styling in Chrome/Safari **and** makes the gutter persist (so you can always see where it would be).
+
+---
+
+### Patch (only the important bits)
+
+**A. Add a class to the scroll container and a persistent gutter**
+
+```tsx
+// Chat scroll area (middle column)
+<Box
+  className="chat-scroll"          // ✅ hook for global styles
+  flex="1"
+  minHeight="0"
+  padding="space40"
+  backgroundColor="colorBackgroundBody"
+  overflowY="auto"
+  style={{
+    scrollBehavior: 'smooth',
+    WebkitOverflowScrolling: 'touch',
+    // Reserve space for the scrollbar so it's always visible (Chromium/Edge/Chrome)
+    scrollbarGutter: 'stable both-edges',
+  }}
+  paddingRight="space40"
+>
+  <AIChatLog>{/* ... */}</AIChatLog>
+  <div ref={messagesEndRef} />
+</Box>
+```
+
+**B. Prevent clipping by the Card’s rounded corners (optional but helps visibility)**
+
+```tsx
+<Card padding="space0" display="flex" flexDirection="column" minHeight="0" overflow="visible">
+```
+
+**C. Add global CSS for the scrollbar (so Chrome/Safari actually style it)**
+
+If you’re on **Next.js**, put this in `app/globals.css` (or a global stylesheet you import once):
+
+```css
+/* Chrome/Safari (WebKit) */
+.chat-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.chat-scroll::-webkit-scrollbar-track {
+  background: #1f2937; /* tweak for dark theme */
+  border-radius: 4px;
+}
+.chat-scroll::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 4px;
+}
+.chat-scroll::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+/* Firefox */
+.chat-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #4b5563 #1f2937;
+}
+```
+
+If you prefer Emotion, add once near your app root:
+
+```tsx
+import { Global } from "@emotion/react";
+
+<Global styles={{
+  ".chat-scroll::-webkit-scrollbar": { width: "8px" },
+  ".chat-scroll::-webkit-scrollbar-track": { background: "#1f2937", borderRadius: "4px" },
+  ".chat-scroll::-webkit-scrollbar-thumb": { background: "#4b5563", borderRadius: "4px" },
+  ".chat-scroll::-webkit-scrollbar-thumb:hover": { background: "#6b7280" },
+  ".chat-scroll": { scrollbarWidth: "thin", scrollbarColor: "#4b5563 #1f2937" }
+}}/>
+```
+
+> Tip: if you **always** want a visible bar on macOS, set System Settings → Appearance → “Show scroll bars: **Always**”. The `scrollbar-gutter: stable` helps in Chromium to keep a visible gutter even when the bar is overlay.
+
+---
+
+### Quick visual polish (based on your screenshot)
+
+* **Sticky chat header** so the title/badge stay visible:
+
+  ```tsx
+  <Box position="sticky" top="0" zIndex="zIndex20" /* keep your bg & borders */> ... </Box>
+  ```
+* **Tighter inner padding on smaller screens**:
+
+  ```tsx
+  padding={["space30","space40","space40"]}
+  ```
+* **Right column header for symmetry** (like “Recommended Numbers”).
+* **Subtle column separators**: give the middle Card a very light right/left border (`borderWidth10` + `colorBorderWeaker`) so columns read clearly in dark mode.
+
+Do the three code changes (A, B, C). After that, you’ll see the scrollbar (or at least a reserved gutter) in the middle chat, and it’ll be obvious even when not actively scrolling.
