@@ -1,0 +1,50 @@
+/* Basic reset and Twilio Paste compatibility */
+@import "tailwindcss";
+
+/* Global box-sizing reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Custom styles for Twilio Paste integration */
+:root {
+  /* Optional custom properties for additional styling */
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4d4d8;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1aa;
+}
+
+/* Hide Next.js development toast/button */
+[data-nextjs-toast] {
+  display: none !important;
+}
+
+[data-next-badge-root] {
+  display: none !important;
+}
+
+[data-nextjs-dev-tools-button] {
+  display: none !important;
+}
