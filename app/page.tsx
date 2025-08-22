@@ -237,22 +237,29 @@ export default function TwilioChatbot() {
           top="50%"
           style={{ transform: "translateY(-50%)" }}
         >
-          <Button 
-            variant={showFilters ? "primary" : "secondary"}
-            onClick={() => setShowFilters(!showFilters)}
-            size={["small", "default", "default"]}
+          <Box
+            backgroundColor="colorBackgroundBody"
+            borderRadius="borderRadiusCircle"
+            padding="space20"
+            boxShadow="shadowHigh"
           >
-            <Stack orientation="horizontal" spacing="space20">
-              <FilterIcon decorative size="sizeIcon20" />
-              <Text 
-                as="span" 
-                fontWeight="fontWeightMedium"
-                display={["none", "block", "block"]}
-              >
-                Filters
-              </Text>
-            </Stack>
-          </Button>
+            <Button 
+              variant={showFilters ? "primary" : "secondary"}
+              onClick={() => setShowFilters(!showFilters)}
+              size={["small", "default", "default"]}
+            >
+              <Stack orientation="horizontal" spacing="space20">
+                <FilterIcon decorative size="sizeIcon20" />
+                <Text 
+                  as="span" 
+                  fontWeight="fontWeightMedium"
+                  display={["none", "block", "block"]}
+                >
+                  Filters
+                </Text>
+              </Stack>
+            </Button>
+          </Box>
         </Box>
 
         {/* Theme Toggle in Header */}
