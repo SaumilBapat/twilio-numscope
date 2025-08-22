@@ -570,7 +570,7 @@ export default function TwilioChatbot() {
                       />
                       <Box
                         position="absolute"
-                        right="space20"
+                        right="space40"
                         top="50%"
                         zIndex="zIndex10"
                         style={{ transform: "translateY(-50%)" }}
@@ -581,6 +581,10 @@ export default function TwilioChatbot() {
                           disabled={isLoading}
                           loading={isLoading}
                           size="small"
+                          style={{
+                            backgroundColor: "#F22F46",
+                            borderColor: "#F22F46"
+                          }}
                         >
                           <SendIcon decorative size="sizeIcon20" />
                         </Button>
