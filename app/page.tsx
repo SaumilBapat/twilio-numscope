@@ -507,15 +507,15 @@ export default function TwilioChatbot() {
                 </Stack>
               </Box>
 
-              <Box 
+              <div 
                 className="chat-scroll"
-                flex="1"
-                minHeight="0"
-                padding="space40"
-                paddingRight="space40"
-                backgroundColor="colorBackgroundBody"
-                overflowY="auto"
                 style={{ 
+                  flex: 1,
+                  minHeight: 0,
+                  padding: '1rem',
+                  paddingRight: '1rem',
+                  backgroundColor: 'var(--paste-color-background-body)',
+                  overflowY: 'auto',
                   scrollBehavior: 'smooth',
                   WebkitOverflowScrolling: 'touch',
                   scrollbarGutter: 'stable both-edges'
@@ -551,7 +551,7 @@ export default function TwilioChatbot() {
                   )}
                   <div ref={messagesEndRef} />
                 </AIChatLog>
-              </Box>
+              </div>
 
               <Box 
                 padding="space40" 
