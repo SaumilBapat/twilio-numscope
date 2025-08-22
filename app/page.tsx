@@ -74,8 +74,8 @@ export default function TwilioChatbot() {
   const messagesEndRef = useRef<HTMLDivElement | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [typingStep, setTypingStep] = useState(0)
-  const [showAdvanced, setShowAdvanced] = useState(false)
   const [showFilters, setShowFilters] = useState(true)
+  const [validationError, setValidationError] = useState<string>("")
 
 
   useEffect(() => {
@@ -113,6 +113,16 @@ export default function TwilioChatbot() {
     addMessage(question, "user")
     if (inputRef.current) inputRef.current.value = ""
     setIsComplete(false)
+
+    // Require at least one country to be selected
+    if (selectedCountries.length === 0) {
+      setValidationError("Please select at least one country before submitting your request.")
+      addMessage("Please select at least one country to get accurate phone number recommendations.", "bot")
+      return
+    }
+
+    // Clear any previous validation errors
+    setValidationError("")
 
     try {
       setIsLoading(true)
@@ -155,17 +165,17 @@ export default function TwilioChatbot() {
         answer?: string
         recommendedNumbers?: RecommendedNumber[]
       }
-      
+
       console.log("=== CLIENT RECEIVED ===")
       console.log("Answer length:", data.answer?.length || "no answer")
       console.log("Answer content:", data.answer)
       console.log("RecommendedNumbers:", data.recommendedNumbers?.length || "no numbers")
       console.log("RecommendedNumbers JSON:", JSON.stringify(data.recommendedNumbers, null, 2))
       console.log("=====================")
-      
+
       addMessage(data.answer ?? "", "bot")
       setLastAnswer(data.answer ?? "")
-      
+
       // Update recommended numbers if provided
       if (data.recommendedNumbers && Array.isArray(data.recommendedNumbers)) {
         setRecommendedNumbers(data.recommendedNumbers)
@@ -186,17 +196,17 @@ export default function TwilioChatbot() {
   const filteredCountries = useMemo(() => {
     // Priority countries that should appear first
     const priorityCountries = ['US', 'GB', 'CA', 'AU', 'DE', 'FR', 'IT', 'ES', 'NL', 'SE', 'NO', 'DK', 'FI', 'IE', 'BE', 'CH', 'AT', 'PT', 'BR', 'MX', 'AR', 'CL', 'IN', 'SG', 'JP', 'KR', 'HK', 'TW', 'TH', 'MY', 'PH', 'ID', 'VN']
-    
+
     const priorityCountryObjects = priorityCountries
       .map(code => countries.find(c => c.cca2 === code))
       .filter((country): country is typeof countries[0] => Boolean(country))
-    
+
     const otherCountries = countries
       .filter(c => !priorityCountries.includes(c.cca2))
       .sort((a, b) => a.name.common.localeCompare(b.name.common))
-    
+
     const allCountries = [...priorityCountryObjects, ...otherCountries]
-    
+
     // Filter countries based on search term
     return countrySearchTerm
       ? allCountries.filter(country => 
@@ -376,7 +386,7 @@ export default function TwilioChatbot() {
                 Filter Options
               </Heading>
             </Box>
-            
+
             <Box paddingX="space40" paddingY="space40">
               <Stack orientation="vertical" spacing="space30">
                 <FormControl>
@@ -471,16 +481,26 @@ export default function TwilioChatbot() {
                 </FormControl>
 
                 <FormControl>
-                  <Label htmlFor="countries">Countries</Label>
+                  <Label htmlFor="countries">
+                    <Stack orientation="horizontal" spacing="space20">
+                      <Text as="span">Countries</Text>
+                      <Text as="span" color="colorTextError" fontWeight="fontWeightSemibold">*</Text>
+                      <Text as="span" color="colorTextError" fontSize="fontSize20">(Required)</Text>
+                    </Stack>
+                  </Label>
                   <Box
                     borderRadius="borderRadius20"
                     borderWidth="borderWidth10"
-                    borderColor="colorBorderWeaker"
+                    borderColor={selectedCountries.length === 0 ? "colorBorderError" : "colorBorderWeaker"}
                     borderStyle="solid"
                     padding="space30"
                     maxHeight={["200px", "200px", "200px"]}
                     overflow={["auto", "auto", "auto"]}
                     backgroundColor="colorBackgroundBody"
+                    style={{
+                      borderBottomWidth: selectedCountries.length === 0 ? "3px" : "1px",
+                      borderBottomColor: selectedCountries.length === 0 ? "#E02040" : undefined
+                    }}
                   >
                     <Stack orientation="vertical" spacing="space20">
                       <Input
@@ -511,7 +531,15 @@ export default function TwilioChatbot() {
                         ))}
                     </Stack>
                   </Box>
-                  <HelpText>Select countries where you need phone numbers ({countries.length} countries available)</HelpText>
+                  <HelpText>
+                    {selectedCountries.length === 0 ? (
+                      <Text as="span" color="colorTextError">
+                        Please select at least one country to get accurate recommendations
+                      </Text>
+                    ) : (
+                      `Select countries where you need phone numbers (${selectedCountries.length} selected, ${countries.length} available)`
+                    )}
+                  </HelpText>
                 </FormControl>
               </Stack>
             </Box>
@@ -694,13 +722,16 @@ export default function TwilioChatbot() {
                         </Button>
                       </Box>
                     </Box>
+                    {validationError && (
+                      <HelpText variant="error">{validationError}</HelpText>
+                    )}
                     <HelpText>Provide as much detail as possible about your phone number needs</HelpText>
                   </FormControl>
                 </Form>
               </Box>
             </Card>
         </Box>
-        
+
         {/* Phone Numbers Section */}
         <Box 
           flex={["1", "1", "1"]}
