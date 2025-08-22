@@ -596,7 +596,7 @@ export default function TwilioChatbot() {
                       />
                       <Box
                         position="absolute"
-                        right={["space20", "space30", "space40"]}
+                        right={["space30", "space40", "space50"]}
                         top="50%"
                         zIndex="zIndex10"
                         style={{ transform: "translateY(-50%)" }}
@@ -606,13 +606,44 @@ export default function TwilioChatbot() {
                           type="submit" 
                           disabled={isLoading}
                           loading={isLoading}
-                          size="small"
+                          size="default"
                           style={{
                             backgroundColor: "#F22F46",
-                            borderColor: "#F22F46"
+                            borderColor: "#F22F46",
+                            borderRadius: "8px",
+                            padding: "12px 16px",
+                            boxShadow: "0 2px 8px rgba(242, 47, 70, 0.25)",
+                            transition: "all 0.2s ease-in-out",
+                            fontWeight: "600"
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = "#E02040"
+                            e.currentTarget.style.transform = "translateY(-1px)"
+                            e.currentTarget.style.boxShadow = "0 4px 12px rgba(242, 47, 70, 0.35)"
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = "#F22F46"
+                            e.currentTarget.style.transform = "translateY(0px)"
+                            e.currentTarget.style.boxShadow = "0 2px 8px rgba(242, 47, 70, 0.25)"
+                          }}
+                          onMouseDown={(e) => {
+                            e.currentTarget.style.transform = "translateY(0px) scale(0.98)"
+                          }}
+                          onMouseUp={(e) => {
+                            e.currentTarget.style.transform = "translateY(-1px) scale(1)"
                           }}
                         >
-                          <SendIcon decorative size="sizeIcon20" />
+                          <Stack orientation="horizontal" spacing="space20">
+                            <SendIcon decorative size="sizeIcon20" />
+                            <Text 
+                              as="span" 
+                              fontWeight="fontWeightSemibold"
+                              display={["none", "block", "block"]}
+                              color="colorTextInverse"
+                            >
+                              Send
+                            </Text>
+                          </Stack>
                         </Button>
                       </Box>
                     </Box>
