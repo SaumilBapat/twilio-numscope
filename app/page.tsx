@@ -216,13 +216,13 @@ export default function TwilioChatbot() {
       {/* Header */}
       <Box 
         backgroundColor="colorBackgroundBrand"
-        paddingY="space40" 
-        paddingX="space40"
+        paddingY={["space30", "space40", "space40"]} 
+        paddingX={["space20", "space30", "space40"]}
         borderBottomWidth="borderWidth20"
         borderBottomColor="colorBorderWeaker"
         borderBottomStyle="solid"
         boxShadow="shadowBorder"
-        height="80px"
+        minHeight={["60px", "70px", "80px"]}
         display="flex"
         alignItems="center"
         style={{
@@ -233,18 +233,24 @@ export default function TwilioChatbot() {
         {/* Filters Button in Header */}
         <Box
           position="absolute"
-          left="space60"
+          left={["space20", "space40", "space60"]}
           top="50%"
           style={{ transform: "translateY(-50%)" }}
         >
           <Button 
             variant={showFilters ? "primary" : "secondary"}
             onClick={() => setShowFilters(!showFilters)}
-            size="default"
+            size={["small", "default", "default"]}
           >
             <Stack orientation="horizontal" spacing="space20">
               <FilterIcon decorative size="sizeIcon20" />
-              <Text as="span" fontWeight="fontWeightMedium">Filters</Text>
+              <Text 
+                as="span" 
+                fontWeight="fontWeightMedium"
+                display={["none", "block", "block"]}
+              >
+                Filters
+              </Text>
             </Stack>
           </Button>
         </Box>
@@ -252,18 +258,19 @@ export default function TwilioChatbot() {
         {/* Theme Toggle in Header */}
         <Box
           position="absolute"
-          right="space60"
+          right={["space20", "space40", "space60"]}
           top="50%"
           style={{ transform: "translateY(-50%)" }}
         >
           <ThemeToggle />
         </Box>
 
-        <Box maxWidth="98vw" marginX="auto">
+        <Box maxWidth="98vw" marginX="auto" textAlign="center">
           <Stack orientation="vertical" spacing="space10">
             <Heading 
               as="h1" 
-              variant="heading40"
+              variant={["heading30", "heading40", "heading40"]}
+              style={{ color: "white" }}
             >
               Twilio Phone Number Assistant
             </Heading>
@@ -279,12 +286,13 @@ export default function TwilioChatbot() {
         </Box>
       </Box>
 
-      {/* Fixed Twilio Logo at Bottom Left */}
+      {/* Fixed Twilio Logo at Bottom Left - Hidden on mobile */}
       <Box
         position="fixed"
         bottom="space60"
         left="space60"
         zIndex="zIndex90"
+        display={["none", "none", "block"]}
       >
         <Stack orientation="horizontal" spacing="space20">
           <LogoTwilioIcon decorative size="sizeIcon50" color="colorTextIconBrandHighlight" />
@@ -294,23 +302,29 @@ export default function TwilioChatbot() {
         </Stack>
       </Box>
 
-      {/* Main Layout - Three columns at same level */}
+      {/* Main Layout - Responsive three columns */}
       <Box 
         display="flex" 
+        flexDirection={["column", "column", "row"]}
         minHeight="calc(100vh - 80px)"
         position="relative"
       >
         {/* Left Sidebar for Filters */}
         {showFilters && (
           <Box
-            width="300px"
+            width={["100%", "100%", "300px"]}
             backgroundColor="colorBackgroundBody"
-            borderRightWidth="borderWidth10"
+            borderRightWidth={["borderWidth0", "borderWidth0", "borderWidth10"]}
+            borderBottomWidth={["borderWidth10", "borderWidth10", "borderWidth0"]}
             borderRightColor="colorBorderWeaker"
+            borderBottomColor="colorBorderWeaker"
             borderRightStyle="solid"
+            borderBottomStyle="solid"
             boxShadow="shadow"
             flexShrink={0}
             paddingTop="space20"
+            maxHeight={["40vh", "40vh", "none"]}
+            overflow={["auto", "auto", "visible"]}
           >
             <Box 
               padding="space40"
@@ -467,12 +481,13 @@ export default function TwilioChatbot() {
 
         {/* Chat Interface Section */}
         <Box 
-          flex="2"
-          paddingX="space40"
+          flex={["1", "1", "2"]}
+          paddingX={["space20", "space30", "space40"]}
           paddingY="space0"
           paddingTop="space20"
           display="flex"
           flexDirection="column"
+          minHeight={["auto", "auto", "calc(100vh - 100px)"]}
         >
             {/* Chat Interface */}
             <Card padding="space0" display="flex" flexDirection="column" overflow="visible">
@@ -505,8 +520,10 @@ export default function TwilioChatbot() {
               </Box>
 
               <Box 
-                padding="space40"
+                padding={["space20", "space30", "space40"]}
                 backgroundColor="colorBackgroundBody"
+                maxHeight={["300px", "400px", "500px"]}
+                overflow="auto"
               >
                 <AIChatLog>
                   {messages.map((message) => (
@@ -517,7 +534,13 @@ export default function TwilioChatbot() {
                         </AIChatMessageAuthor>
                       )}
                       <AIChatMessageBody>
-                        {message.content}
+                        <Text 
+                          as="span" 
+                          fontSize={["fontSize20", "fontSize30", "fontSize30"]}
+                          lineHeight={["lineHeight20", "lineHeight30", "lineHeight30"]}
+                        >
+                          {message.content}
+                        </Text>
                       </AIChatMessageBody>
                     </AIChatMessage>
                   ))}
@@ -541,7 +564,7 @@ export default function TwilioChatbot() {
               </Box>
 
               <Box 
-                padding="space40" 
+                padding={["space20", "space30", "space40"]} 
                 borderTopWidth="borderWidth10" 
                 borderTopColor="colorBorderWeaker"
                 borderTopStyle="solid"
@@ -556,7 +579,7 @@ export default function TwilioChatbot() {
                         id="requirements"
                         ref={inputRef}
                         placeholder="Describe your specific phone number requirements..."
-                        rows={4}
+                        rows={3}
                         disabled={isLoading}
                         style={{
                           paddingRight: "60px",
@@ -567,12 +590,13 @@ export default function TwilioChatbot() {
                           fontFamily: "inherit",
                           fontSize: "14px",
                           resize: "vertical",
-                          outline: "none"
+                          outline: "none",
+                          minHeight: "80px"
                         }}
                       />
                       <Box
                         position="absolute"
-                        right="space40"
+                        right={["space20", "space30", "space40"]}
                         top="50%"
                         zIndex="zIndex10"
                         style={{ transform: "translateY(-50%)" }}
@@ -601,10 +625,12 @@ export default function TwilioChatbot() {
         
         {/* Phone Numbers Section */}
         <Box 
-          flex="1"
-          paddingX="space40"
+          flex={["1", "1", "1"]}
+          paddingX={["space20", "space30", "space40"]}
           paddingY="space0"
           paddingTop="space20"
+          display={["block", "block", "block"]}
+          minHeight={["300px", "400px", "auto"]}
         >
           <Box 
             backgroundColor="colorBackgroundWeak"
@@ -612,6 +638,7 @@ export default function TwilioChatbot() {
             borderWidth="borderWidth10"
             borderColor="colorBorderWeaker"
             borderStyle="solid"
+            height={["300px", "400px", "auto"]}
           >
               <PhoneNumbersTable 
                 requirements={{
