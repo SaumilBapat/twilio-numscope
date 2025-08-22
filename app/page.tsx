@@ -520,7 +520,26 @@ export default function TwilioChatbot() {
                   padding="space40"
                   style={{ 
                     scrollBehavior: 'smooth',
-                    maxHeight: '100%'
+                    maxHeight: '100%',
+                    overflowY: 'auto',
+                    scrollbarWidth: 'thin',
+                    scrollbarColor: '#cbd5e0 #f7fafc'
+                  }}
+                  css={{
+                    '&::-webkit-scrollbar': {
+                      width: '8px'
+                    },
+                    '&::-webkit-scrollbar-track': {
+                      background: '#f7fafc',
+                      borderRadius: '4px'
+                    },
+                    '&::-webkit-scrollbar-thumb': {
+                      background: '#cbd5e0',
+                      borderRadius: '4px'
+                    },
+                    '&::-webkit-scrollbar-thumb:hover': {
+                      background: '#a0aec0'
+                    }
                   }}
                 >
                   <AIChatLog>
