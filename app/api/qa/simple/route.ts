@@ -145,6 +145,21 @@ export async function POST(req: Request) {
     console.log("Answer content (last 200 chars):", answer.substring(Math.max(0, answer.length - 200)))
     console.log("Full answer being sent:", JSON.stringify(answer))
     console.log("RecommendedNumbers count:", Array.isArray(recommendedNumbers) ? recommendedNumbers.length : "not an array")
+    
+    // Debug each recommended number individually
+    if (Array.isArray(recommendedNumbers)) {
+      recommendedNumbers.forEach((number, index) => {
+        console.log(`--- Recommended Number ${index + 1} ---`)
+        console.log("  geo:", number.geo)
+        console.log("  type:", number.type)
+        console.log("  status:", number.status)
+        console.log("  smsEnabled:", number.smsEnabled)
+        console.log("  voiceEnabled:", number.voiceEnabled)
+        console.log("  considerations:", number.considerations?.substring(0, 100) + "...")
+        console.log("  restrictions:", number.restrictions?.substring(0, 100) + "...")
+        console.log("  Full object:", JSON.stringify(number, null, 2))
+      })
+    }
     console.log("=========================")
     
     return NextResponse.json({ answer, recommendedNumbers })
