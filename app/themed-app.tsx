@@ -130,14 +130,20 @@ export function ThemeToggle() {
       padding="space20"
       boxShadow="shadowHigh"
     >
-      <Button
-        variant="secondary_icon"
-        size="icon"
+      <div
         onClick={toggleTheme}
+        style={{ cursor: 'pointer', display: 'inline-block' }}
         aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            toggleTheme()
+          }
+        }}
       >
         {isDark ? <CustomSunIcon /> : <CustomMoonIcon />}
-      </Button>
+      </div>
     </Box>
   )
 }
