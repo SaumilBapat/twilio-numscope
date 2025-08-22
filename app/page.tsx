@@ -478,8 +478,8 @@ export default function TwilioChatbot() {
                     borderColor="colorBorderWeaker"
                     borderStyle="solid"
                     padding="space30"
-                    maxHeight={["none", "none", "200px"]}
-                    overflow={["visible", "visible", "auto"]}
+                    maxHeight={["200px", "200px", "200px"]}
+                    overflow={["auto", "auto", "auto"]}
                     backgroundColor="colorBackgroundBody"
                   >
                     <Stack orientation="vertical" spacing="space20">
