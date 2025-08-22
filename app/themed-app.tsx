@@ -114,7 +114,7 @@ function CustomMoonIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
       <circle cx="12" cy="12" r="10" fill="#000000" />
-      <path d="M9 2a10 10 0 1 0 10 10c0-5.5-4.5-10-10-10z" fill="#ffffff" transform="translate(1.5, 1)" />
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="#ffffff" />
     </svg>
   )
 }
