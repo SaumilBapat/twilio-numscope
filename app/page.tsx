@@ -508,73 +508,61 @@ export default function TwilioChatbot() {
               <Box 
                 flex="1"
                 minHeight="0"
-                overflow="hidden"
-                padding="space0"
+                padding="space40"
                 backgroundColor="colorBackgroundBody"
-                display="flex"
-                flexDirection="column"
+                overflow="auto"
+                style={{ 
+                  scrollBehavior: 'smooth',
+                  scrollbarWidth: 'thin',
+                  scrollbarColor: '#cbd5e0 #f7fafc'
+                }}
+                css={{
+                  '&::-webkit-scrollbar': {
+                    width: '8px'
+                  },
+                  '&::-webkit-scrollbar-track': {
+                    background: '#f7fafc',
+                    borderRadius: '4px'
+                  },
+                  '&::-webkit-scrollbar-thumb': {
+                    background: '#cbd5e0',
+                    borderRadius: '4px'
+                  },
+                  '&::-webkit-scrollbar-thumb:hover': {
+                    background: '#a0aec0'
+                  }
+                }}
               >
-                <Box
-                  flex="1"
-                  overflow="auto"
-                  padding="space40"
-                  style={{ 
-                    scrollBehavior: 'smooth',
-                    maxHeight: '100%',
-                    overflowY: 'auto',
-                    scrollbarWidth: 'thin',
-                    scrollbarColor: '#cbd5e0 #f7fafc'
-                  }}
-                  css={{
-                    '&::-webkit-scrollbar': {
-                      width: '8px'
-                    },
-                    '&::-webkit-scrollbar-track': {
-                      background: '#f7fafc',
-                      borderRadius: '4px'
-                    },
-                    '&::-webkit-scrollbar-thumb': {
-                      background: '#cbd5e0',
-                      borderRadius: '4px'
-                    },
-                    '&::-webkit-scrollbar-thumb:hover': {
-                      background: '#a0aec0'
-                    }
-                  }}
-                >
-                  <AIChatLog>
-                    {messages.map((message) => (
-                      <AIChatMessage key={message.id} variant={message.type === "user" ? "user" : "bot"}>
-                        {message.type === "bot" && (
-                          <AIChatMessageAuthor aria-label="Assistant">
-                            Twilio Assistant
-                          </AIChatMessageAuthor>
-                        )}
-                        <AIChatMessageBody>
-                          {message.content}
-                        </AIChatMessageBody>
-                      </AIChatMessage>
-                    ))}
-                    {isLoading && (
-                      <AIChatMessage variant="bot">
+                <AIChatLog>
+                  {messages.map((message) => (
+                    <AIChatMessage key={message.id} variant={message.type === "user" ? "user" : "bot"}>
+                      {message.type === "bot" && (
                         <AIChatMessageAuthor aria-label="Assistant">
                           Twilio Assistant
                         </AIChatMessageAuthor>
-                        <AIChatMessageBody>
-                          <Stack orientation="horizontal" spacing="space20">
-                            <Box className="loading-spin">
-                              <LoadingIcon decorative size="sizeIcon20" />
-                            </Box>
-                            <Text as="span">Analyzing your requirements...</Text>
-                          </Stack>
-                        </AIChatMessageBody>
-                      </AIChatMessage>
-                    )}
-                    <div ref={messagesEndRef} />
-                  </AIChatLog>
-                </Box>ChatMessage>
+                      )}
+                      <AIChatMessageBody>
+                        {message.content}
+                      </AIChatMessageBody>
+                    </AIChatMessage>
+                  ))}
+                  {isLoading && (
+                    <AIChatMessage variant="bot">
+                      <AIChatMessageAuthor aria-label="Assistant">
+                        Twilio Assistant
+                      </AIChatMessageAuthor>
+                      <AIChatMessageBody>
+                        <Stack orientation="horizontal" spacing="space20">
+                          <Box className="loading-spin">
+                            <LoadingIcon decorative size="sizeIcon20" />
+                          </Box>
+                          <Text as="span">Analyzing your requirements...</Text>
+                        </Stack>
+                      </AIChatMessageBody>
+                    </AIChatMessage>
                   )}
-                
+                  <div ref={messagesEndRef} />
+                </AIChatLog>
               </Box>
 
               <Box 
