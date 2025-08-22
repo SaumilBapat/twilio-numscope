@@ -75,7 +75,7 @@ export default function TwilioChatbot() {
   const [isLoading, setIsLoading] = useState(false)
   const [typingStep, setTypingStep] = useState(0)
   const [showFilters, setShowFilters] = useState(true)
-  const [validationError, setValidationError] = useState<string>("")
+  const [validationError, setValidationError] = useState<string | null>(null)
 
 
   useEffect(() => {
@@ -121,7 +121,7 @@ export default function TwilioChatbot() {
     }
 
     // Clear any previous validation errors
-    setValidationError("")
+    setValidationError(null)
 
     try {
       setIsLoading(true)
@@ -519,6 +519,10 @@ export default function TwilioChatbot() {
                                   setSelectedCountries(prev => [...prev, country.cca2])
                                 } else {
                                   setSelectedCountries(prev => prev.filter(c => c !== country.cca2))
+                                }
+                                // Clear validation error when user selects/deselects countries
+                                if (validationError) {
+                                  setValidationError(null)
                                 }
                               }}
                             >
