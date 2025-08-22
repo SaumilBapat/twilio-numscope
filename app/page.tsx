@@ -238,15 +238,20 @@ export default function TwilioChatbot() {
           style={{ transform: "translateY(-50%)" }}
         >
           <Box
-            backgroundColor="colorBackgroundBody"
-            borderRadius="borderRadiusCircle"
-            padding="space20"
-            boxShadow="shadowHigh"
+            backgroundColor="rgb(0, 0, 0)"
+            borderRadius="borderRadius20"
+            padding="space30"
+            boxShadow="shadowCard"
           >
             <Button 
               variant={showFilters ? "primary" : "secondary"}
               onClick={() => setShowFilters(!showFilters)}
               size={["small", "default", "default"]}
+              style={{
+                backgroundColor: showFilters ? "#F22F46" : "transparent",
+                borderColor: showFilters ? "#F22F46" : "rgba(255, 255, 255, 0.3)",
+                color: "white"
+              }}
             >
               <Stack orientation="horizontal" spacing="space20">
                 <FilterIcon decorative size="sizeIcon20" />
@@ -254,6 +259,7 @@ export default function TwilioChatbot() {
                   as="span" 
                   fontWeight="fontWeightMedium"
                   display={["none", "block", "block"]}
+                  color="colorTextInverse"
                 >
                   Filters
                 </Text>
