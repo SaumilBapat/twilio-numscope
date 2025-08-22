@@ -238,13 +238,18 @@ export default function TwilioChatbot() {
           style={{ transform: "translateY(-50%)" }}
         >
           <Box
-            backgroundColor="colorBackgroundBody"
+            backgroundColor="colorBackgroundPrimary"
             borderRadius="borderRadius30"
-            padding="space40"
+            padding="space30"
             boxShadow="shadowHigh"
             borderWidth="borderWidth10"
-            borderColor="colorBorderWeaker"
+            borderColor="colorBorderPrimary"
             borderStyle="solid"
+            style={{
+              backgroundColor: "#0066CC",
+              borderColor: "#0066CC",
+              transform: "scale(0.9)"
+            }}
           >
             <Button 
               variant="primary"
