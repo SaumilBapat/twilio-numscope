@@ -34,6 +34,7 @@ import countries from "world-countries"
 interface RecommendedNumber {
   geo: string
   type: string
+  status?: string
   smsEnabled: boolean
   voiceEnabled: boolean
   considerations: string

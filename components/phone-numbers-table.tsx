@@ -18,6 +18,7 @@ import { ProductPhoneNumbersIcon } from "@twilio-paste/icons/esm/ProductPhoneNum
 interface RecommendedNumber {
   geo: string
   type: string
+  status?: string
   smsEnabled: boolean
   voiceEnabled: boolean
   considerations: string
@@ -141,6 +142,11 @@ export function PhoneNumbersTable({ requirements, recommendedNumbers = [], compa
                         {number.geo} {number.type}
                       </Text>
                       <Stack orientation="horizontal" spacing="space30">
+                        {number.status && (
+                          <Badge variant={number.status.toLowerCase() === 'available' ? 'success' : 'warning'} as="span" size="default">
+                            {number.status}
+                          </Badge>
+                        )}
                         {number.smsEnabled && (
                           <Badge variant="success" as="span" size="default">SMS</Badge>
                         )}
@@ -176,6 +182,7 @@ export function PhoneNumbersTable({ requirements, recommendedNumbers = [], compa
               <THead>
                 <Tr>
                   <Th textAlign="left">Location & Type</Th>
+                  <Th textAlign="left">Status</Th>
                   <Th textAlign="left">Features</Th>
                   <Th textAlign="center">Actions</Th>
                 </Tr>
@@ -192,6 +199,13 @@ export function PhoneNumbersTable({ requirements, recommendedNumbers = [], compa
                           {number.type}
                         </Text>
                       </Stack>
+                    </Td>
+                    <Td>
+                      {number.status && (
+                        <Badge variant={number.status.toLowerCase() === 'available' ? 'success' : 'warning'} as="span">
+                          {number.status}
+                        </Badge>
+                      )}
                     </Td>
                     <Td>
                       <Stack orientation="horizontal" spacing="space20">
@@ -216,7 +230,7 @@ export function PhoneNumbersTable({ requirements, recommendedNumbers = [], compa
                 ))}
                 {filteredNumbers.length === 0 && (
                   <Tr>
-                    <Td colSpan={3} textAlign="center">
+                    <Td colSpan={4} textAlign="center">
                       <Box paddingY="space70">
                         <Text as="span" color="colorTextWeak">
                           No recommendations match your criteria
@@ -246,6 +260,17 @@ export function PhoneNumbersTable({ requirements, recommendedNumbers = [], compa
         <ModalBody>
           {selectedNumber && (
             <Stack orientation="vertical" spacing="space40">
+              {selectedNumber.status && (
+                <Box>
+                  <Heading as="h4" variant="heading50" marginBottom="space20">
+                    Status
+                  </Heading>
+                  <Badge variant={selectedNumber.status.toLowerCase() === 'available' ? 'success' : 'warning'} as="span">
+                    {selectedNumber.status}
+                  </Badge>
+                </Box>
+              )}
+              
               <Box>
                 <Heading as="h4" variant="heading50" marginBottom="space20">
                   Features
