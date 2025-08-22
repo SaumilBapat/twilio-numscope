@@ -160,6 +160,7 @@ export default function TwilioChatbot() {
       console.log("Answer length:", data.answer?.length || "no answer")
       console.log("Answer content:", data.answer)
       console.log("RecommendedNumbers:", data.recommendedNumbers?.length || "no numbers")
+      console.log("RecommendedNumbers JSON:", JSON.stringify(data.recommendedNumbers, null, 2))
       console.log("=====================")
       
       addMessage(data.answer ?? "", "bot")
