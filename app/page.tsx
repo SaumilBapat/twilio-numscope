@@ -245,7 +245,7 @@ export default function TwilioChatbot() {
               backgroundColor: showFilters ? "#0066CC" : "#4A90E2",
               borderColor: showFilters ? "#0066CC" : "#4A90E2",
               borderRadius: "8px",
-              padding: "12px 16px",
+              padding: "12px 20px",
               boxShadow: "0 2px 8px rgba(74, 144, 226, 0.25)",
               transition: "all 0.2s ease-in-out",
               fontWeight: "600",
