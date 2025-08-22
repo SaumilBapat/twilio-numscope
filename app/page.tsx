@@ -240,7 +240,7 @@ export default function TwilioChatbot() {
           <Box
             backgroundColor="colorBackgroundBody"
             borderRadius="borderRadius30"
-            padding="space20"
+            padding="space60"
             boxShadow="shadowHigh"
             borderWidth="borderWidth10"
             borderColor="colorBorderWeaker"
