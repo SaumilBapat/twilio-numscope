@@ -334,11 +334,11 @@ export default function TwilioChatbot() {
         </Box>
       </Box>
 
-      {/* Fixed Twilio Logo at Bottom Left - Hidden on mobile */}
+      {/* Fixed Twilio Logo at Bottom Right - Hidden on mobile */}
       <Box
         position="fixed"
         bottom="space60"
-        left="space60"
+        right="space60"
         zIndex="zIndex90"
         display={["none", "none", "block"]}
       >
