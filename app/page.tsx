@@ -247,6 +247,16 @@ export default function TwilioChatbot() {
           </Button>
         </Box>
 
+        {/* Theme Toggle in Header */}
+        <Box
+          position="absolute"
+          right="space60"
+          top="50%"
+          style={{ transform: "translateY(-50%)" }}
+        >
+          <ThemeToggle />
+        </Box>
+
         <Box maxWidth="98vw" marginX="auto">
           <Stack orientation="vertical" spacing="space10">
             <Heading 
@@ -265,16 +275,6 @@ export default function TwilioChatbot() {
             </Text>
           </Stack>
         </Box>
-      </Box>
-
-      {/* Floating Theme Toggle */}
-      <Box
-        position="fixed"
-        top="space40"
-        right="space40"
-        zIndex="zIndex90"
-      >
-        <ThemeToggle />
       </Box>
 
       {/* Fixed Twilio Logo at Bottom Left */}
