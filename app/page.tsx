@@ -154,6 +154,13 @@ export default function TwilioChatbot() {
         answer?: string
         recommendedNumbers?: RecommendedNumber[]
       }
+      
+      console.log("=== CLIENT RECEIVED ===")
+      console.log("Answer length:", data.answer?.length || "no answer")
+      console.log("Answer content:", data.answer)
+      console.log("RecommendedNumbers:", data.recommendedNumbers?.length || "no numbers")
+      console.log("=====================")
+      
       addMessage(data.answer ?? "", "bot")
       setLastAnswer(data.answer ?? "")
       
@@ -228,7 +235,6 @@ export default function TwilioChatbot() {
           left="space60"
           top="50%"
           style={{ transform: "translateY(-50%)" }}
-          zIndex="zIndex90"
         >
           <Button 
             variant={showFilters ? "primary" : "secondary"}
@@ -287,31 +293,38 @@ export default function TwilioChatbot() {
         </Stack>
       </Box>
 
-      {/* Main Content with Sidebar */}
-      <Box position="relative">
-        {/* Collapsible Left Sidebar for Filters */}
+      {/* Main Layout - Three columns at same level */}
+      <Box 
+        display="flex" 
+        height="calc(100vh - 80px)"
+        position="relative"
+      >
+        {/* Left Sidebar for Filters */}
         {showFilters && (
           <Box
-            position="fixed"
-            top="80px"
-            left="0"
             width="300px"
-            height="calc(100vh - 80px)"
             backgroundColor="colorBackgroundBody"
             borderRightWidth="borderWidth10"
             borderRightColor="colorBorderWeaker"
             borderRightStyle="solid"
-            zIndex="zIndex80"
-            paddingTop="space40"
-            paddingX="space40"
             overflow="auto"
             boxShadow="shadow"
+            flexShrink={0}
+            paddingTop="space20"
           >
-            <Stack orientation="vertical" spacing="space40">
+            <Box 
+              padding="space40"
+              borderBottomWidth="borderWidth10" 
+              borderBottomColor="colorBorderWeaker" 
+              borderBottomStyle="solid"
+              backgroundColor="colorBackgroundWeak"
+            >
               <Heading as="h3" variant="heading40">
                 Filter Options
               </Heading>
-              
+            </Box>
+            
+            <Box paddingX="space40" paddingY="space40">
               <Stack orientation="vertical" spacing="space30">
                 <FormControl>
                   <Label htmlFor="smsType">SMS Type</Label>
@@ -448,173 +461,171 @@ export default function TwilioChatbot() {
                   <HelpText>Select countries where you need phone numbers ({countries.length} countries available)</HelpText>
                 </FormControl>
               </Stack>
-
-            </Stack>
+            </Box>
           </Box>
         )}
 
-        {/* Main Content */}
+        {/* Chat Interface Section */}
         <Box 
-          width="100vw"
-          height="calc(100vh - 80px)"
-          style={{ paddingLeft: showFilters ? "300px" : "0" }}
-          transition="padding-left 0.3s ease"
-          overflow="hidden"
+          flex="2"
+          paddingX="space40"
+          paddingY="space0"
+          paddingTop="space20"
           display="flex"
-          flexDirection="row"
+          flexDirection="column"
+          minHeight="0"
         >
-          {/* Chat Interface Section */}
-          <Box 
-            flex="2"
-            paddingX="space40"
-            paddingY="space20"
-            overflow="hidden"
-          >
-              {/* Chat Interface */}
-              <Card padding="space0">
-                <Box 
-                  padding="space40" 
-                  borderBottomWidth="borderWidth10" 
-                  borderBottomColor="colorBorderWeaker"
-                  borderBottomStyle="solid"
-                  backgroundColor="colorBackgroundWeak"
-                >
+            {/* Chat Interface */}
+            <Card padding="space0" display="flex" flexDirection="column" minHeight="0">
+              <Box 
+                padding="space40" 
+                borderBottomWidth="borderWidth10" 
+                borderBottomColor="colorBorderWeaker"
+                borderBottomStyle="solid"
+                backgroundColor="colorBackgroundWeak"
+                flexShrink={0}
+              >
+                <Stack orientation="horizontal" spacing="space30">
                   <Stack orientation="horizontal" spacing="space30">
+                    <ChatIcon decorative color="colorTextIconBrandHighlight" size="sizeIcon30" />
                     <Stack orientation="horizontal" spacing="space30">
-                      <ChatIcon decorative color="colorTextIconBrandHighlight" size="sizeIcon30" />
-                      <Stack orientation="horizontal" spacing="space30">
-                        <Heading as="h2" variant="heading40">Chat Assistant</Heading>
-                        <Badge variant={isLoading ? "info" : "success"} as="span">
-                          {isLoading ? (
-                            <Stack orientation="horizontal" spacing="space20">
-                              <LoadingIcon decorative size="sizeIcon10" />
-                              <Text as="span">Thinking...</Text>
-                            </Stack>
-                          ) : (
-                            "Ready"
-                          )}
-                        </Badge>
-                      </Stack>
+                      <Heading as="h2" variant="heading40">Chat Assistant</Heading>
+                      <Badge variant={isLoading ? "info" : "success"} as="span">
+                        {isLoading ? (
+                          <Stack orientation="horizontal" spacing="space20">
+                            <LoadingIcon decorative size="sizeIcon10" />
+                            <Text as="span">Thinking...</Text>
+                          </Stack>
+                        ) : (
+                          "Ready"
+                        )}
+                      </Badge>
                     </Stack>
                   </Stack>
-                </Box>
+                </Stack>
+              </Box>
 
-                <Box 
-                  height="calc(100vh - 300px)" 
-                  overflow="auto" 
-                  padding="space40"
-                  backgroundColor="colorBackgroundBody"
-                >
-                  <AIChatLog>
-                    {messages.map((message) => (
-                      <AIChatMessage key={message.id} variant={message.type === "user" ? "user" : "bot"}>
-                        {message.type === "bot" && (
-                          <AIChatMessageAuthor aria-label="Assistant">
-                            Twilio Assistant
-                          </AIChatMessageAuthor>
-                        )}
-                        <AIChatMessageBody>
-                          {message.content}
-                        </AIChatMessageBody>
-                      </AIChatMessage>
-                    ))}
-                    {isLoading && (
-                      <AIChatMessage variant="bot">
+              <Box 
+                flex="1"
+                minHeight="0"
+                overflow="auto" 
+                padding="space40"
+                backgroundColor="colorBackgroundBody"
+              >
+                <AIChatLog>
+                  {messages.map((message) => (
+                    <AIChatMessage key={message.id} variant={message.type === "user" ? "user" : "bot"}>
+                      {message.type === "bot" && (
                         <AIChatMessageAuthor aria-label="Assistant">
                           Twilio Assistant
                         </AIChatMessageAuthor>
-                        <AIChatMessageBody>
-                          <Stack orientation="horizontal" spacing="space20">
+                      )}
+                      <AIChatMessageBody>
+                        {message.content}
+                      </AIChatMessageBody>
+                    </AIChatMessage>
+                  ))}
+                  {isLoading && (
+                    <AIChatMessage variant="bot">
+                      <AIChatMessageAuthor aria-label="Assistant">
+                        Twilio Assistant
+                      </AIChatMessageAuthor>
+                      <AIChatMessageBody>
+                        <Stack orientation="horizontal" spacing="space20">
+                          <Box className="loading-spin">
                             <LoadingIcon decorative size="sizeIcon20" />
-                            <Text as="span">Analyzing your requirements...</Text>
-                          </Stack>
-                        </AIChatMessageBody>
-                      </AIChatMessage>
-                    )}
-                  </AIChatLog>
-                  <div ref={messagesEndRef} />
-                </Box>
+                          </Box>
+                          <Text as="span">Analyzing your requirements...</Text>
+                        </Stack>
+                      </AIChatMessageBody>
+                    </AIChatMessage>
+                  )}
+                </AIChatLog>
+                <div ref={messagesEndRef} />
+              </Box>
 
-                <Box 
-                  padding="space40" 
-                  borderTopWidth="borderWidth10" 
-                  borderTopColor="colorBorderWeaker"
-                  borderTopStyle="solid"
-                  backgroundColor="colorBackgroundWeak"
-                >
-                  <Form onSubmit={handleSubmit}>
-                    <FormControl>
-                      <Label htmlFor="requirements">Requirements</Label>
-                      <Box position="relative">
-                        <textarea
-                          id="requirements"
-                          ref={inputRef}
-                          placeholder="Describe your specific phone number requirements..."
-                          rows={4}
+              <Box 
+                padding="space40" 
+                borderTopWidth="borderWidth10" 
+                borderTopColor="colorBorderWeaker"
+                borderTopStyle="solid"
+                backgroundColor="colorBackgroundWeak"
+                flexShrink={0}
+              >
+                <Form onSubmit={handleSubmit}>
+                  <FormControl>
+                    <Label htmlFor="requirements">Requirements</Label>
+                    <Box position="relative">
+                      <textarea
+                        id="requirements"
+                        ref={inputRef}
+                        placeholder="Describe your specific phone number requirements..."
+                        rows={4}
+                        disabled={isLoading}
+                        style={{
+                          paddingRight: "60px",
+                          width: "100%",
+                          padding: "12px",
+                          border: "1px solid #d2d6dc",
+                          borderRadius: "4px",
+                          fontFamily: "inherit",
+                          fontSize: "14px",
+                          resize: "vertical",
+                          outline: "none"
+                        }}
+                      />
+                      <Box
+                        position="absolute"
+                        right="space20"
+                        top="50%"
+                        zIndex="zIndex10"
+                        style={{ transform: "translateY(-50%)" }}
+                      >
+                        <Button 
+                          variant="primary" 
+                          type="submit" 
                           disabled={isLoading}
-                          style={{
-                            paddingRight: "60px",
-                            width: "100%",
-                            padding: "12px",
-                            border: "1px solid #d2d6dc",
-                            borderRadius: "4px",
-                            fontFamily: "inherit",
-                            fontSize: "14px",
-                            resize: "vertical",
-                            outline: "none"
-                          }}
-                        />
-                        <Box
-                          position="absolute"
-                          right="space20"
-                          bottom="space20"
-                          zIndex="zIndex10"
+                          loading={isLoading}
+                          size="small"
                         >
-                          <Button 
-                            variant="primary" 
-                            type="submit" 
-                            disabled={isLoading}
-                            loading={isLoading}
-                            size="small"
-                          >
-                            <SendIcon decorative size="sizeIcon20" />
-                          </Button>
-                        </Box>
+                          <SendIcon decorative size="sizeIcon20" />
+                        </Button>
                       </Box>
-                      <HelpText>Provide as much detail as possible about your phone number needs</HelpText>
-                    </FormControl>
-                  </Form>
-                </Box>
-              </Card>
-          </Box>
-          
-          {/* Phone Numbers Section */}
+                    </Box>
+                    <HelpText>Provide as much detail as possible about your phone number needs</HelpText>
+                  </FormControl>
+                </Form>
+              </Box>
+            </Card>
+        </Box>
+        
+        {/* Phone Numbers Section */}
+        <Box 
+          flex="1"
+          paddingX="space40"
+          paddingY="space0"
+          overflow="hidden"
+          paddingTop="space20"
+        >
           <Box 
-            flex="1"
-            paddingX="space40"
-            paddingY="space20"
+            height="100%"
+            backgroundColor="colorBackgroundWeak"
+            borderRadius="borderRadius30"
+            borderWidth="borderWidth10"
+            borderColor="colorBorderWeaker"
+            borderStyle="solid"
             overflow="hidden"
           >
-            <Box 
-              height="100%"
-              backgroundColor="colorBackgroundWeak"
-              borderRadius="borderRadius30"
-              borderWidth="borderWidth10"
-              borderColor="colorBorderWeaker"
-              borderStyle="solid"
-              overflow="hidden"
-            >
-                <PhoneNumbersTable 
-                  requirements={{
-                    smsType,
-                    useCase,
-                    businessPresence,
-                    voiceRequired,
-                  }}
-                  recommendedNumbers={recommendedNumbers}
-                  compact={true}
-                />
-            </Box>
+              <PhoneNumbersTable 
+                requirements={{
+                  smsType,
+                  useCase,
+                  businessPresence,
+                  voiceRequired,
+                }}
+                recommendedNumbers={recommendedNumbers}
+                compact={true}
+              />
           </Box>
         </Box>
       </Box>

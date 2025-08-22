@@ -61,7 +61,7 @@ export async function POST(req: Request) {
 
     async function callUpstream(url: string, tryWithoutBearer = false) {
       const controller = new AbortController()
-      const timeout = setTimeout(() => controller.abort(), 10000)
+      const timeout = setTimeout(() => controller.abort(), 30000) // Increased from 10s to 30s
       
       const authHeader = tryWithoutBearer ? bearer : `Bearer ${bearer}`
       
@@ -81,12 +81,16 @@ export async function POST(req: Request) {
           signal: controller.signal,
         })
         const text = await res.text()
+        console.log("Raw response text length:", text.length)
+        console.log("Response status:", res.status)
         let parsed: any = undefined
         try { 
           parsed = JSON.parse(text)
-          console.log("Parsed API response:", JSON.stringify(parsed, null, 2))
+          console.log("Answer length in response:", parsed.answer?.length || "no answer")
+          console.log("Answer preview:", parsed.answer?.substring(0, 100) + "...")
+          console.log("RecommendedNumbers count:", parsed.recommendedNumbers?.length || "no numbers")
         } catch { 
-          console.log("Failed to parse JSON response:", text)
+          console.log("Failed to parse JSON response:", text.substring(0, 500))
         }
         return { res, text, parsed }
       } finally {
@@ -135,8 +139,13 @@ export async function POST(req: Request) {
     const answer = attempt.parsed?.answer ?? ""
     const recommendedNumbers = attempt.parsed?.recommendedNumbers ?? []
     
-    console.log("Sending to client - answer:", answer ? "present" : "missing")
-    console.log("Sending to client - recommendedNumbers:", Array.isArray(recommendedNumbers) ? `${recommendedNumbers.length} items` : "not an array")
+    console.log("=== SENDING TO CLIENT ===")
+    console.log("Answer length:", answer.length)
+    console.log("Answer content (first 200 chars):", answer.substring(0, 200))
+    console.log("Answer content (last 200 chars):", answer.substring(Math.max(0, answer.length - 200)))
+    console.log("Full answer being sent:", JSON.stringify(answer))
+    console.log("RecommendedNumbers count:", Array.isArray(recommendedNumbers) ? recommendedNumbers.length : "not an array")
+    console.log("=========================")
     
     return NextResponse.json({ answer, recommendedNumbers })
   } catch (_error) {
