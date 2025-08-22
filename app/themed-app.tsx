@@ -132,7 +132,7 @@ export function ThemeToggle() {
       alignItems="center"
       justifyContent="center"
       borderRadius="borderRadiusCircle"
-      backgroundColor={isDark ? "colorBackgroundBody" : "colorBackgroundBodyInverse"}
+      backgroundColor={isDark ? "colorBackgroundBodyInverse" : "colorBackgroundBody"}
       boxShadow="shadowHigh"
       cursor="pointer"
       onClick={toggleTheme}
