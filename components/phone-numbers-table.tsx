@@ -123,41 +123,46 @@ export function PhoneNumbersTable({ requirements, recommendedNumbers = [], compa
             </Box>
           ) : compact ? (
             // Compact card-based layout for sidebar
-            <Stack orientation="vertical" spacing="space30">
-              {filteredNumbers.slice(0, 6).map((number, index) => (
-                <Box
-                  key={index}
-                  padding="space30"
-                  borderRadius="borderRadius20"
-                  backgroundColor="colorBackgroundBody"
-                  borderWidth="borderWidth10"
-                  borderColor="colorBorderWeak"
-                  borderStyle="solid"
-                >
-                  <Stack orientation="vertical" spacing="space20">
-                    <Text as="span" fontSize="fontSize30" fontWeight="fontWeightSemibold">
-                      {number.geo} {number.type}
-                    </Text>
-                    <Stack orientation="horizontal" spacing="space20">
-                      {number.smsEnabled && (
-                        <Badge variant="success" as="span">SMS</Badge>
-                      )}
-                      {number.voiceEnabled && (
-                        <Badge variant="success" as="span">Voice</Badge>
-                      )}
+            <Box padding="space40">
+              <Stack orientation="vertical" spacing="space50">
+                {filteredNumbers.slice(0, 6).map((number, index) => (
+                  <Box
+                    key={index}
+                    padding="space50"
+                    borderRadius="borderRadius30"
+                    backgroundColor="colorBackgroundBody"
+                    borderWidth="borderWidth10"
+                    borderColor="colorBorderWeak"
+                    borderStyle="solid"
+                    boxShadow="shadowBorder"
+                  >
+                    <Stack orientation="vertical" spacing="space40">
+                      <Text as="span" fontSize="fontSize40" fontWeight="fontWeightSemibold" lineHeight="lineHeight30">
+                        {number.geo} {number.type}
+                      </Text>
+                      <Stack orientation="horizontal" spacing="space30">
+                        {number.smsEnabled && (
+                          <Badge variant="success" as="span" size="default">SMS</Badge>
+                        )}
+                        {number.voiceEnabled && (
+                          <Badge variant="success" as="span" size="default">Voice</Badge>
+                        )}
+                      </Stack>
+                      <Box marginTop="space30">
+                        <Button 
+                          variant="secondary" 
+                          size="default"
+                          onClick={() => handleViewMore(number)}
+                          width="100%"
+                        >
+                          View Details
+                        </Button>
+                      </Box>
                     </Stack>
-                    <Box marginTop="space20">
-                      <Button 
-                        variant="secondary" 
-                        size="small"
-                        onClick={() => handleViewMore(number)}
-                      >
-                        View Details
-                      </Button>
-                    </Box>
-                  </Stack>
-                </Box>
-              ))}
+                  </Box>
+                ))}
+              </Stack>
+            </Box>
               {filteredNumbers.length === 0 && (
                 <Box paddingY="space50" textAlign="center">
                   <Text as="span" color="colorTextWeak" fontSize="fontSize20">
