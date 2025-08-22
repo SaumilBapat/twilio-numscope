@@ -313,7 +313,7 @@ export default function TwilioChatbot() {
             <Heading 
               as="h1" 
               variant={["heading30", "heading40", "heading40"]}
-              color="colorTextInverse"
+              style={{ color: "#ffffff" }}
             >
               Twilio Phone Number Assistant
             </Heading>
@@ -321,7 +321,7 @@ export default function TwilioChatbot() {
               as="p"
               fontSize={["fontSize10", "fontSize20", "fontSize20"]}
               display={["none", "block", "block"]}
-              color="colorTextInverse"
+              style={{ color: "#ffffff" }}
             >
               Find the perfect number for your use case
             </Text>
