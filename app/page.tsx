@@ -225,18 +225,13 @@ export default function TwilioChatbot() {
         minHeight={["60px", "70px", "80px"]}
         display="flex"
         alignItems="center"
+        justifyContent="space-between"
         style={{
           background: "linear-gradient(135deg, #F22F46 0%, #E02040 100%)"
         }}
-        position="relative"
       >
-        {/* Filters Button Container in Header */}
-        <Box
-          position="absolute"
-          left={["space20", "space40", "space60"]}
-          top="50%"
-          style={{ transform: "translateY(-50%)" }}
-        >
+        {/* Left: Filters Button */}
+        <Box flex="0 0 auto">
           <Box
             backgroundColor="colorBackgroundPrimary"
             borderRadius="borderRadius30"
@@ -299,21 +294,11 @@ export default function TwilioChatbot() {
           </Box>
         </Box>
 
-        {/* Theme Toggle in Header */}
-        <Box
-          position="absolute"
-          right={["space20", "space40", "space60"]}
-          top="50%"
-          style={{ transform: "translateY(-50%)" }}
-        >
-          <ThemeToggle />
-        </Box>
-
+        {/* Center: Title */}
         <Box 
-          maxWidth="98vw" 
-          marginX="auto" 
+          flex="1"
           textAlign="center"
-          paddingX={["space80", "space100", "space120"]}
+          marginX="space40"
         >
           <Stack orientation="vertical" spacing="space10">
             <Heading 
@@ -332,6 +317,11 @@ export default function TwilioChatbot() {
               Find the perfect number for your use case
             </Text>
           </Stack>
+        </Box>
+
+        {/* Right: Theme Toggle */}
+        <Box flex="0 0 auto">
+          <ThemeToggle />
         </Box>
       </Box>
 
