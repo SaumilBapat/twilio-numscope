@@ -230,56 +230,68 @@ export default function TwilioChatbot() {
         }}
         position="relative"
       >
-        {/* Filters Button in Header */}
+        {/* Filters Button Container in Header */}
         <Box
           position="absolute"
           left={["space20", "space40", "space60"]}
           top="50%"
           style={{ transform: "translateY(-50%)" }}
         >
-          <Button 
-            variant="primary"
-            onClick={() => setShowFilters(!showFilters)}
-            size={["small", "default", "default"]}
-            style={{
-              backgroundColor: showFilters ? "#0066CC" : "#4A90E2",
-              borderColor: showFilters ? "#0066CC" : "#4A90E2",
-              borderRadius: "8px",
-              padding: "12px 20px",
-              boxShadow: "0 2px 8px rgba(74, 144, 226, 0.25)",
-              transition: "all 0.2s ease-in-out",
-              fontWeight: "600",
-              color: "white"
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = "#0052A3"
-              e.currentTarget.style.transform = "translateY(-1px)"
-              e.currentTarget.style.boxShadow = "0 4px 12px rgba(74, 144, 226, 0.35)"
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = showFilters ? "#0066CC" : "#4A90E2"
-              e.currentTarget.style.transform = "translateY(0px)"
-              e.currentTarget.style.boxShadow = "0 2px 8px rgba(74, 144, 226, 0.25)"
-            }}
-            onMouseDown={(e) => {
-              e.currentTarget.style.transform = "translateY(0px) scale(0.98)"
-            }}
-            onMouseUp={(e) => {
-              e.currentTarget.style.transform = "translateY(-1px) scale(1)"
-            }}
+          <Box
+            backgroundColor="colorBackgroundBody"
+            borderRadius="borderRadius30"
+            padding="space20"
+            boxShadow="shadowHigh"
+            borderWidth="borderWidth10"
+            borderColor="colorBorderWeaker"
+            borderStyle="solid"
           >
-            <Stack orientation="horizontal" spacing="space20">
-              <FilterIcon decorative size="sizeIcon20" />
-              <Text 
-                as="span" 
-                fontWeight="fontWeightSemibold"
-                display={["none", "block", "block"]}
-                color="colorTextInverse"
-              >
-                Filters
-              </Text>
-            </Stack>
-          </Button>
+            <Button 
+              variant="primary"
+              onClick={() => setShowFilters(!showFilters)}
+              size={["small", "default", "default"]}
+              style={{
+                backgroundColor: showFilters ? "#0066CC" : "#4A90E2",
+                borderColor: showFilters ? "#0066CC" : "#4A90E2",
+                borderRadius: "8px",
+                padding: "16px 28px",
+                boxShadow: "0 2px 8px rgba(74, 144, 226, 0.25)",
+                transition: "all 0.2s ease-in-out",
+                fontWeight: "700",
+                color: "white",
+                minHeight: "48px"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "#0052A3"
+                e.currentTarget.style.transform = "translateY(-1px) scale(1.02)"
+                e.currentTarget.style.boxShadow = "0 4px 12px rgba(74, 144, 226, 0.35)"
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = showFilters ? "#0066CC" : "#4A90E2"
+                e.currentTarget.style.transform = "translateY(0px) scale(1)"
+                e.currentTarget.style.boxShadow = "0 2px 8px rgba(74, 144, 226, 0.25)"
+              }}
+              onMouseDown={(e) => {
+                e.currentTarget.style.transform = "translateY(0px) scale(0.98)"
+              }}
+              onMouseUp={(e) => {
+                e.currentTarget.style.transform = "translateY(-1px) scale(1.02)"
+              }}
+            >
+              <Stack orientation="horizontal" spacing="space30">
+                <FilterIcon decorative size="sizeIcon30" />
+                <Text 
+                  as="span" 
+                  fontWeight="fontWeightSemibold"
+                  display={["none", "block", "block"]}
+                  color="colorTextInverse"
+                  fontSize="16px"
+                >
+                  Filters
+                </Text>
+              </Stack>
+            </Button>
+          </Box>
         </Box>
 
         {/* Theme Toggle in Header */}
