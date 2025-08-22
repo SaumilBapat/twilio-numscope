@@ -62,10 +62,8 @@ export function ThemedApp({ children }: { children: React.ReactNode }) {
 
   const theme = isDark ? "dark" : "default"
 
-  // Customization overrides for Twilio branding
+  // Optional: Twilio brand override
   const customElements = {}
-
-  // Override brand color to use Twilio red
   const themeOverrides = {
     backgroundColors: {
       colorBackgroundBrand: "#F22F46" // Twilio red
@@ -75,11 +73,7 @@ export function ThemedApp({ children }: { children: React.ReactNode }) {
   return (
     <ThemeContext.Provider value={{ isDark, toggleTheme }}>
       <Theme.Provider theme={theme}>
-        <CustomizationProvider 
-          baseTheme={theme} 
-          elements={customElements}
-          theme={themeOverrides}
-        >
+        <CustomizationProvider baseTheme={theme} elements={customElements} theme={themeOverrides}>
           {children}
         </CustomizationProvider>
       </Theme.Provider>
@@ -122,28 +116,34 @@ function CustomMoonIcon() {
 export function ThemeToggle() {
   const { isDark, toggleTheme } = useTheme()
 
+  // Use the *target* theme inside a tiny nested provider so tokens match the icon
+  const targetTheme = isDark ? "default" : "dark"
+
   return (
-    <Box
-      width="40px"
-      height="40px"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      borderRadius="borderRadiusCircle"
-      backgroundColor={isDark ? "colorBackgroundBodyInverse" : "colorBackgroundBody"}
-      boxShadow="shadowHigh"
-      cursor="pointer"
-      onClick={toggleTheme}
-      role="button"
-      aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          toggleTheme()
-        }
-      }}
-    >
-      {isDark ? <CustomSunIcon /> : <CustomMoonIcon />}
-    </Box>
+    <Theme.Provider theme={targetTheme}>
+      <Box
+        width="40px"
+        height="40px"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        borderRadius="borderRadiusCircle"
+        backgroundColor="colorBackgroundBody"
+        boxShadow="shadowHigh"
+        cursor="pointer"
+        onClick={toggleTheme}
+        role="button"
+        aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault()
+            toggleTheme()
+          }
+        }}
+      >
+        {isDark ? <CustomSunIcon /> : <CustomMoonIcon />}
+      </Box>
+    </Theme.Provider>
   )
 }
