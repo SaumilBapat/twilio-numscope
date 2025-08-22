@@ -313,7 +313,7 @@ export default function TwilioChatbot() {
             <Heading 
               as="h1" 
               variant={["heading30", "heading40", "heading40"]}
-              style={{ color: "#ffffff" }}
+              style={{ color: "#ffffff !important" }}
             >
               Twilio Phone Number Assistant
             </Heading>
