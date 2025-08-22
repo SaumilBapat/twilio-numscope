@@ -205,9 +205,8 @@ export default function TwilioChatbot() {
 
   return (
     <Box 
-      height="100vh" 
+      minHeight="100vh" 
       width="100vw" 
-      overflow="hidden" 
       backgroundColor="colorBackgroundBody" 
       margin="space0" 
       padding="space0"
@@ -296,9 +295,8 @@ export default function TwilioChatbot() {
       {/* Main Layout - Three columns at same level */}
       <Box 
         display="flex" 
-        height="calc(100vh - 80px)"
+        minHeight="calc(100vh - 80px)"
         position="relative"
-        minHeight="0"
       >
         {/* Left Sidebar for Filters */}
         {showFilters && (
@@ -308,8 +306,6 @@ export default function TwilioChatbot() {
             borderRightWidth="borderWidth10"
             borderRightColor="colorBorderWeaker"
             borderRightStyle="solid"
-            overflowY="auto"
-            minHeight="0"
             boxShadow="shadow"
             flexShrink={0}
             paddingTop="space20"
@@ -475,10 +471,9 @@ export default function TwilioChatbot() {
           paddingTop="space20"
           display="flex"
           flexDirection="column"
-          minHeight="0"
         >
             {/* Chat Interface */}
-            <Card padding="space0" display="flex" flexDirection="column" minHeight="0" overflow="visible">
+            <Card padding="space0" display="flex" flexDirection="column" overflow="visible">
               <Box 
                 padding="space40" 
                 borderBottomWidth="borderWidth10" 
@@ -507,19 +502,9 @@ export default function TwilioChatbot() {
                 </Stack>
               </Box>
 
-              <div 
-                className="chat-scroll"
-                style={{ 
-                  flex: 1,
-                  minHeight: 0,
-                  padding: '1rem',
-                  paddingRight: '1rem',
-                  backgroundColor: 'var(--paste-color-background-body)',
-                  overflowY: 'auto',
-                  scrollBehavior: 'smooth',
-                  WebkitOverflowScrolling: 'touch',
-                  scrollbarGutter: 'stable both-edges'
-                }}
+              <Box 
+                padding="space40"
+                backgroundColor="colorBackgroundBody"
               >
                 <AIChatLog>
                   {messages.map((message) => (
@@ -551,7 +536,7 @@ export default function TwilioChatbot() {
                   )}
                   <div ref={messagesEndRef} />
                 </AIChatLog>
-              </div>
+              </Box>
 
               <Box 
                 padding="space40" 
@@ -613,17 +598,14 @@ export default function TwilioChatbot() {
           flex="1"
           paddingX="space40"
           paddingY="space0"
-          overflow="hidden"
           paddingTop="space20"
         >
           <Box 
-            height="100%"
             backgroundColor="colorBackgroundWeak"
             borderRadius="borderRadius30"
             borderWidth="borderWidth10"
             borderColor="colorBorderWeaker"
             borderStyle="solid"
-            overflow="hidden"
           >
               <PhoneNumbersTable 
                 requirements={{
