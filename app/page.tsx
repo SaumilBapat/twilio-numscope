@@ -309,7 +309,12 @@ export default function TwilioChatbot() {
           <ThemeToggle />
         </Box>
 
-        <Box maxWidth="98vw" marginX="auto" textAlign="center">
+        <Box 
+          maxWidth="98vw" 
+          marginX="auto" 
+          textAlign="center"
+          paddingX={["space80", "space100", "space120"]}
+        >
           <Stack orientation="vertical" spacing="space10">
             <Heading 
               as="h1" 
