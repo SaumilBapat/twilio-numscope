@@ -24,16 +24,17 @@ html, body {
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #f7fafc;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d4d4d8;
+  background: #cbd5e0;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1aa;
+  background: #a0aec0;
 }
 
 /* Hide Next.js development toast/button */

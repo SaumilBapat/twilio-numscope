@@ -298,6 +298,7 @@ export default function TwilioChatbot() {
         display="flex" 
         height="calc(100vh - 80px)"
         position="relative"
+        minHeight="0"
       >
         {/* Left Sidebar for Filters */}
         {showFilters && (
@@ -307,7 +308,8 @@ export default function TwilioChatbot() {
             borderRightWidth="borderWidth10"
             borderRightColor="colorBorderWeaker"
             borderRightStyle="solid"
-            overflow="auto"
+            overflowY="auto"
+            minHeight="0"
             boxShadow="shadow"
             flexShrink={0}
             paddingTop="space20"
@@ -509,28 +511,14 @@ export default function TwilioChatbot() {
                 flex="1"
                 minHeight="0"
                 padding="space40"
+                paddingRight="space40"
                 backgroundColor="colorBackgroundBody"
-                overflow="auto"
+                overflowY="auto"
                 style={{ 
                   scrollBehavior: 'smooth',
+                  WebkitOverflowScrolling: 'touch',
                   scrollbarWidth: 'thin',
                   scrollbarColor: '#cbd5e0 #f7fafc'
-                }}
-                css={{
-                  '&::-webkit-scrollbar': {
-                    width: '8px'
-                  },
-                  '&::-webkit-scrollbar-track': {
-                    background: '#f7fafc',
-                    borderRadius: '4px'
-                  },
-                  '&::-webkit-scrollbar-thumb': {
-                    background: '#cbd5e0',
-                    borderRadius: '4px'
-                  },
-                  '&::-webkit-scrollbar-thumb:hover': {
-                    background: '#a0aec0'
-                  }
                 }}
               >
                 <AIChatLog>
