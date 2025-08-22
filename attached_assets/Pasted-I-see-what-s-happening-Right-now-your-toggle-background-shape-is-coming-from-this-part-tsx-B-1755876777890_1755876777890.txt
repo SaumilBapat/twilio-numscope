@@ -1,0 +1,95 @@
+I see what’s happening.
+
+Right now your toggle background shape is coming from this part:
+
+```tsx
+<Box
+  backgroundColor="colorBackgroundBody"
+  borderRadius="borderRadiusCircle"
+  padding="space20"
+  boxShadow="shadowHigh"
+>
+```
+
+But because `<Box>` sizes itself around its child `<div>`, the result is an *oval* instead of a proper circle. Also, your **Sun** and **Moon** icons each draw their *own background circle* inside the SVG, so they don’t inherit a consistent black/white circle behind them.
+
+### Fix
+
+1. Make the **toggle container** a fixed square (e.g. `40x40px`) so `borderRadiusCircle` produces a true circle.
+2. Remove the outer background circle inside your custom SVGs. Instead, let the toggle container provide the white/black circle background.
+3. Just draw the sun rays or moon crescent on top of the transparent background.
+
+### Example Fix
+
+```tsx
+export function ThemeToggle() {
+  const { isDark, toggleTheme } = useTheme()
+  
+  return (
+    <Box
+      width="40px"
+      height="40px"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      borderRadius="borderRadiusCircle"
+      backgroundColor={isDark ? "colorBackgroundBodyInverse" : "colorBackgroundBody"}
+      boxShadow="shadowHigh"
+      onClick={toggleTheme}
+      cursor="pointer"
+      role="button"
+      aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') toggleTheme()
+      }}
+    >
+      {isDark ? <CustomSunIcon /> : <CustomMoonIcon />}
+    </Box>
+  )
+}
+```
+
+Then update your **icons** so they don’t include their own big circle:
+
+```tsx
+function CustomSunIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="4" fill="#FFD700" />
+      <g stroke="#FFD700" strokeWidth="1.5" strokeLinecap="round">
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="M4.93 4.93l1.41 1.41" />
+        <path d="M17.66 17.66l1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="M6.34 17.66l-1.41 1.41" />
+        <path d="M19.07 4.93l-1.41 1.41" />
+      </g>
+    </svg>
+  )
+}
+
+function CustomMoonIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M21 12.79A9 9 0 1 1 11.21 3 
+           7 7 0 0 0 21 12.79z"
+        fill="#ffffff"
+      />
+    </svg>
+  )
+}
+```
+
+### Result
+
+* The toggle itself is a **true circle** (since width=height).
+* Background color of the circle switches: white in light mode, black in dark mode.
+* The sun/moon icons sit *on top* of that circle background, without drawing their own.
+
+👉 That way you’ll get **white circle + sun rays** for light mode, and **black circle + moon crescent** for dark mode, without the stretched oval issue.
+
+Do you want me to rewrite your full `ThemeToggle` + `CustomSunIcon` + `CustomMoonIcon` code block with these fixes applied so you can paste it directly?
