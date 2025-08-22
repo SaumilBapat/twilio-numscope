@@ -83,6 +83,9 @@ export async function POST(req: Request) {
         const text = await res.text()
         console.log("Raw response text length:", text.length)
         console.log("Response status:", res.status)
+        console.log("=== RAW JSON RESPONSE ===")
+        console.log(text)
+        console.log("========================")
         let parsed: any = undefined
         try { 
           parsed = JSON.parse(text)
