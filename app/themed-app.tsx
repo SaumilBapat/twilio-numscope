@@ -2,9 +2,7 @@
 
 import { Theme } from "@twilio-paste/theme"
 import { CustomizationProvider } from "@twilio-paste/core/customization"
-import { Box, Button } from "@twilio-paste/core"
-import { LightModeIcon } from "@twilio-paste/icons/esm/LightModeIcon"
-import { DarkModeIcon } from "@twilio-paste/icons/esm/DarkModeIcon"
+import { Box } from "@twilio-paste/core"
 import { useEffect, useState, createContext, useContext } from "react"
 
 // Create theme context
@@ -123,7 +121,7 @@ function CustomMoonIcon() {
 // Theme Toggle Component
 export function ThemeToggle() {
   const { isDark, toggleTheme } = useTheme()
-  
+
   return (
     <Box
       width="40px"
