@@ -38,54 +38,7 @@ html, body {
 
 
 
-/* Hide Next.js development toast/button */
-[data-nextjs-toast] {
-  display: none !important;
-}
-
-[data-next-badge-root] {
-  display: none !important;
-}
-
-[data-nextjs-dev-tools-button] {
-  display: none !important;
-}
-
-/* Hide all Next.js development UI elements */
-[data-nextjs-dialog] {
-  display: none !important;
-}
-
-[data-nextjs-portal] {
-  display: none !important;
-}
-
-[data-nextjs-dev-overlay] {
-  display: none !important;
-}
-
-[data-nextjs-dev-tools] {
-  display: none !important;
-}
-
-/* Hide any floating development buttons/icons */
-#__next-dev-client-indicator {
-  display: none !important;
-}
-
-#__next-build-watcher {
-  display: none !important;
-}
-
-/* Hide Turbopack/development indicators */
-[data-turbo-dev] {
-  display: none !important;
-}
-
-/* Additional catch-all for Next.js development elements */
-[id*="__next"]:not(#__next) {
-  display: none !important;
-}
+/* Custom styling for application */
 
 /* Mobile-specific styles */
 @media (max-width: 768px) {

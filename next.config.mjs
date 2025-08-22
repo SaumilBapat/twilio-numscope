@@ -11,7 +11,6 @@ const nextConfig = {
   },
   devIndicators: {
     buildActivity: false,
-    buildActivityPosition: 'bottom-right',
   },
   // Improve dev server stability
   webpack: (config, { dev, isServer }) => {
@@ -38,6 +37,10 @@ const nextConfig = {
   // Disable performance monitoring that's causing loops
   compiler: {
     removeConsole: false,
+  },
+  // Disable all development UI elements
+  env: {
+    NEXT_TELEMETRY_DISABLED: '1',
   },
   // Better error recovery
   onDemandEntries: {
