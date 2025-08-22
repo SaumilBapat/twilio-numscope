@@ -543,24 +543,22 @@ export default function TwilioChatbot() {
                 backgroundColor="colorBackgroundWeak"
                 flexShrink={0}
               >
-                <Stack orientation="horizontal" spacing="space30">
+                <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
                   <Stack orientation="horizontal" spacing="space30">
                     <ChatIcon decorative color="colorTextIconBrandHighlight" size="sizeIcon30" />
                     <Heading as="h2" variant="heading40">Chat Assistant</Heading>
                   </Stack>
-                  <Box marginLeft="auto">
-                    <Badge variant={isLoading ? "info" : "success"} as="span">
-                      {isLoading ? (
-                        <Stack orientation="horizontal" spacing="space20">
-                          <LoadingIcon decorative size="sizeIcon10" />
-                          <Text as="span">Thinking...</Text>
-                        </Stack>
-                      ) : (
-                        "Ready"
-                      )}
-                    </Badge>
-                  </Box>
-                </Stack>
+                  <Badge variant={isLoading ? "info" : "success"} as="span">
+                    {isLoading ? (
+                      <Stack orientation="horizontal" spacing="space20">
+                        <LoadingIcon decorative size="sizeIcon10" />
+                        <Text as="span">Thinking...</Text>
+                      </Stack>
+                    ) : (
+                      "Ready"
+                    )}
+                  </Badge>
+                </Box>
               </Box>
 
               <Box 
